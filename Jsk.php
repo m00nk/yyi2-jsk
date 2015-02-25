@@ -9,14 +9,12 @@
 
 namespace m00nk\jsk;
 
-/**
- * Class Jsk
- */
 class Jsk extends \yii\base\Widget
 {
 	public function run()
 	{
 		$view = $this->getView();
+
 		JskAsset::register($view);
 
 		$view->registerJs('jsk.init();');

@@ -21,8 +21,14 @@ class JskAsset extends AssetBundle
 	];
 
 	public $depends = [
-		'yii\web\JqueryAsset',
 		'yii\bootstrap\BootstrapAsset',
+		'yii\web\JqueryAsset',
+		'yii\jui\DialogAsset',
+		'yii\jui\ThemeAsset'
+	];
+
+	public $publishOptions = [
+		'forceCopy' => YII_ENV_DEV
 	];
 
 	public function init()
