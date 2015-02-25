@@ -10,8 +10,6 @@
 var jsk = {
 
 	settings: {
-		urlAssets: '',
-		urlAjax: '',
 		btnOk: 'Ok',
 		btnYes: 'Да',
 		btnNo: 'Нет',
@@ -34,21 +32,153 @@ var jsk = {
 	{
 		this.settings = $.extend(this.settings, sets || {});
 
-		var imgFileUrl = this.settings.urlAssets + '/ani-logo.gif';
 		$('<div id="jskWaitingAnimationCover"></div>').appendTo('body');
-		$('<div id="jskWaitingAnimationWrapper"><div id="jskWaitingAnimationBorder"><img src="' + imgFileUrl + '" /></div></div>').appendTo('body');
-		$('<img  id="jskWaitingAnimationImage" src="' + imgFileUrl + '" />').appendTo('body');
-
+		$('<div id="jskWaitingAnimationWrapper"><div id="jskWaitingAnimationBorder"><div id="jskWaitingAnimationImage"></div></div></div>').appendTo('body');
 	},
 
 	/**
-	 * Возвращает jQuery-объект картинки-индикатора загрузки для вставки в страницу.
-	 * Удалить вставленный индикатор можно просто вызвав его метод remove()
+	 * Создает мини-диалог.
+	 *
+	 * Внимание! Одновременно может быть создан только один мини-диалог.
+	 *
+	 * @params html содержимое окна HTML
+	 * @params options массив параметров
+	 *
+	 * Параметры
+	 * title : заголовок окна. Если пустая строка, то окно не будет иметь заголовка
+	 * windowClasses: класс окна
+	 * baseDomObject: базовый DOM-объект. Если задан, то координаты окна будут отсчитываться от этого объекта, иначе - окно появится в центре экрана.
+	 * offsetX: смещение в точках по горизонтали от левого верхнего угла базового объекта
+	 * offsetY: смещение в точках по вертикали от левого верхнего угла базового объекта
+	 * buttons [ {text: "", classes: "", type: "submit|cancel|button|", attributes: ... }, ...] кнопки
+	 *
+	 * Закрывается диалог через вызов jsk.miniDialogClose();
+	 *
+	 * Обработчик на кнопку "OK" вешается с помощью dlg.find('.jsk_js_submit').bind('click', function(e){...});
+	 * Обработчик на кнопку "Cancel" вешается с помощью dlg.find('.jsk_js_cancel').bind('click', function(e){...}); но он уже задан по умолчанию,
+	 * поэтому, если не требуется каких-либо дополнительных действий при закрытии окна, то создавать и привязывать свой обработчик не нужно.
 	 */
-	waitingAnimationGetIcon16: function(){ return $('<img class="jskWaitingAnimationIcon16" src="' + this.settings.urlAssets + '/ani-16.gif" />'); },
-	waitingAnimationGetIcon35: function(){ return $('<img class="jskWaitingAnimationIcon35" src="' + this.settings.urlAssets + '/ani-35.gif" />'); },
-	waitingAnimationGetIconBar: function(){ return $('<img class="jskWaitingAnimationIconBar" src="' + this.settings.urlAssets + '/ani-bar.gif" />'); },
-	waitingAnimationGetIconLogo: function(){ return $('<img class="jskWaitingAnimationIconLogo" src="' + this.settings.urlAssets + '/ani-logo.gif" />'); },
+	miniDialog: function(html, options)
+	{
+		options = $.extend({
+			title : '',
+			windowClasses: '',
+			baseDomObject: false,
+			offsetX : 0,
+			offsetY : 0,
+			buttons : [
+				{
+					text : jsk.settings.btnAccept,
+					classes: 'btn btn-sm btn-primary',
+					type: 'submit',
+					attributes : ''
+				},
+				{
+					text : jsk.settings.btnCancel,
+					classes: 'btn btn-sm btn-default',
+					type: 'cancel',
+					attributes : ''
+				}
+			]
+		}, options || {});
+
+
+		if(options.buttons.length > 0)
+		{ // добавляем в код кнопки
+			var btnHtml = '';
+			for(var i=0; i<options.buttons.length; i++)
+			{
+				var btn = options.buttons[i];
+				var classes = btn.classes || '';
+				var attributes = btn.attributes || '';
+				switch(btn.type)
+				{
+					case 'submit' : classes += ' jsk_js_submit'; break;
+					case 'cancel' : classes += ' jsk_js_cancel'; break;
+				}
+
+				btnHtml += '<a href="#" class="'+classes+'" '+attributes+'>'+btn.text+'</a>';
+			}
+
+			html += '<div class="jsk_buttons">'+btnHtml + '</div>';
+		}
+
+		//-----------------------------------------
+		// создаем заголовок
+		if(options.title.length)
+			html = '<div class="jsk_mini_dlg_title">'+options.title+'</div>' + html;
+
+		//-----------------------------------------
+		// отображаем диалог
+		var dlg = jsk.waitingMessageShow('<div class="jsk_mini_dialog">'+html+'</div>').addClass(options.windowClasses);
+		var dialogContent = dlg.find('.jsk_mini_dialog');
+
+		options.baseDomObject = $(options.baseDomObject);
+		var x, y, y1, wnd = $(window);
+
+		if(options.baseDomObject.size() > 0)
+		{ // найден базовый объект - позиционируем окно по нему
+			var p = options.baseDomObject.offset();
+
+			y = p.top - wnd.scrollTop() - parseInt(dialogContent.outerHeight() / 2) + options.offsetY;
+			x = p.left + options.offsetX;
+
+			y1 = y + dialogContent.outerHeight();
+			if(y1 > wnd.height()) y -= y1 - wnd.height();
+
+			dlg.css({'padding-top': 0, 'text-align': 'left'});
+			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px', 'left': x + 'px'});
+		}
+		else
+		{ // позиционируем по центру экрана
+			y = (wnd.height() - dialogContent.outerHeight())/2;
+			dlg.css({'padding-top': 0, 'text-align': 'center'});
+			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
+		}
+
+		//-----------------------------------------
+		// привязка обработчиков
+		//-----------------------------------------
+
+		// кнопка типа "cancel" - закрываем окно
+		dlg.find('.jsk_js_cancel').bind('click', function(e){
+			jsk.miniDialogClose();
+			e.preventDefault();
+			return true;
+		});
+
+		//-----------------------------------------
+		// клавиши Enter и Escape
+		dlg.bind('keydown', function(e)
+		{
+			if(e.which == 27 /* ESCAPE */)
+			{
+				dlg.find('.jsk_js_cancel').click();
+				e.preventDefault();
+				return true;
+			}
+
+			if(e.which == 13 /* ENTER */)
+			{
+				if(!$(e.target).is('textarea'))
+				{
+					dlg.find('.jsk_js_submit').click();
+					e.preventDefault();
+				}
+				return true;
+			}
+
+			return true;
+		});
+
+		$(dlg.find(':input')[0]).focus(); // фокусируемся на первом контроле
+
+		return dlg;
+	},
+
+	miniDialogClose: function(){
+		jsk.waitingAnimationHide();
+	},
 
 	/**
 	 * Отображает глобальный индикатор загрузки. Отключение - jsk.waitingAnimationHide()
@@ -69,6 +199,16 @@ var jsk = {
 		$('#jskWaitingMessageWrapper').remove();
 	},
 
+
+	/**
+	 * Возвращает jQuery-объект картинки-индикатора загрузки для вставки в страницу.
+	 * Удалить вставленный индикатор можно просто вызвав его метод remove()
+	 */
+	waitingAnimationGetIcon16: function(){ return $('<div class="jskWaitingAnimationIcon16"></div>'); },
+	waitingAnimationGetIcon35: function(){ return $('<div class="jskWaitingAnimationIcon35"></div>'); },
+	waitingAnimationGetIconBar: function(){ return $('<div class="jskWaitingAnimationIconBar"></div>'); },
+	waitingAnimationGetIconLogo: function(){ return $('<div class="jskWaitingAnimationIconLogo"></div>'); },
+
 	/**
 	 * Показывает глобальный индикатор загрузки, но используя HTML вместо картинки
 	 */
@@ -77,7 +217,7 @@ var jsk = {
 		var d1 = $('<div id="jskWaitingMessageWrapper"></div>').css({
 			position: 'fixed', top: 0, left: 0,
 			width: '100%', height: '100%',
-			'z-index': 101,
+			'z-index': 1110,
 			'text-align': 'center',
 			'vertical-align': 'middle',
 			'padding-top': '300px'
@@ -279,49 +419,17 @@ var jsk = {
 	 * Метод отображает модальное сообщение и возвращает его объект. Удаление - вызов remove() объекта.
 	 *
 	 * @param message - текст сообщения (HTML)
-	 * @param className - дополнительное имя класса для div.alert
+	 * @param className - дополнительное имя класса для div.alert (варианты: alert-success, alert-info, alert-warning, alert-danger)
 	 */
 	modalAlertShow: function(message, className)
 	{
-		var d = $('<div></div>').css({
-			'position': 'fixed',
-			'top': 0,
-			'left': 0,
-			'width': '100%',
-			'height': '100%',
-			'z-index': 100
-		}).appendTo($('body'));
-
-		$('<div></div>').css({
-			'position': 'fixed',
-			'top': 0,
-			'left': 0,
-			'width': '100%',
-			'height': '100%',
-			'background': '#888',
-			'opacity': '0.85'
-		}).appendTo(d);
-
-		var alert = $('<div class="alert ' + className + '"></div>').html(message).css({
-			'position': 'fixed',
-			'left': 0,
-			'width': '500px',
-			'font-size': '140%',
-			'padding': '30px'
-		}).appendTo(d);
-
-		var h = alert.height();
-		var x = parseInt(($(window).width() - alert.width()) / 2);
-		var y = parseInt(($(window).height() - h) / 2) - 100;
-
-		alert.css({
-			'left': x + 'px',
-			'top': y + 'px'
-		});
-
-		return d;
+		className = (className) || 'alert-info';
+		return jsk.waitingMessageShow('<div class="alert ' + className + '">'+message+'</div>');
 	},
 
+	/**
+	 * Открывает указанный URL в новой вкладке броузера
+	 */
 	openLinkInNewTab: function(url)
 	{
 		window.open(url , '_blank')
@@ -422,144 +530,6 @@ var jsk = {
 		}
 
 		this.messageBox(_vd(obj), 'Dump');
-	},
-
-	/**
-	 * Создает мини-диалог
-	 *
-	 * @params html содержимое окна HTML
-	 * @params options массив параметров
-	 *
-	 * Параметры
-	 * title : заголовок окна. Если пустая строка, то окно не будет иметь заголовка
-	 * windowClasses: класс окна
-	 * baseDomObject: базовый DOM-объект. Если задан, то координаты окна будут отсчитываться от этого объекта, иначе - окно появится в центре экрана.
-	 * offsetX: смещение в точках по горизонтали от левого верхнего угла базового объекта
-	 * offsetY: смещение в точках по вертикали от левого верхнего угла базового объекта
-	 * buttons [ {text: "", classes: "", type: "submit|cancel|button|", attributes: ... }, ...] кнопки
-	 *
-	 * Закрывается диалог через вызов jsk.waitingAnimationHide();
-	 *
-	 * Обработчик на кнопку "OK" вешается с помощью dlg.find('.jsk_js_submit').bind('click', function(e){...});
-	 * Обработчик на кнопку "Cancel" вешается с помощью dlg.find('.jsk_js_cancel').bind('click', function(e){...}); но он уже задан по умолчанию,
-	 * поэтому, если не требуется каких-либо дополнительных действий при закрытии окна, то создавать и привязывать свой обработчик не нужно.
-	 */
-	miniDialog: function(html, options)
-	{
-		options = $.extend({
-			title : '',
-			windowClasses: '',
-			baseDomObject: false,
-			offsetX : 0,
-			offsetY : 0,
-			buttons : [
-				{
-					text : jsk.settings.btnAccept,
-					classes: 'btn btn-small btn-primary',
-					type: 'submit',
-					attributes : ''
-				},
-				{
-					text : jsk.settings.btnCancel,
-					classes: 'btn btn-small',
-					type: 'cancel',
-					attributes : ''
-				}
-			]
-		}, options || {});
-
-
-		if(options.buttons.length > 0)
-		{ // добавляем в код кнопки
-			var btnHtml = '';
-			for(var i=0; i<options.buttons.length; i++)
-			{
-				var btn = options.buttons[i];
-				var classes = btn.classes || '';
-				var attributes = btn.attributes || '';
-				switch(btn.type)
-				{
-					case 'submit' : classes += ' jsk_js_submit'; break;
-					case 'cancel' : classes += ' jsk_js_cancel'; break;
-				}
-
-				btnHtml += '<a href="#" class="'+classes+'" '+attributes+'>'+btn.text+'</a>';
-			}
-
-			html += '<div class="jsk_buttons">'+btnHtml + '</div>';
-		}
-
-		//-----------------------------------------
-		// создаем заголовок
-		if(options.title.length)
-			html = '<div class="jsk_mini_dlg_title">'+options.title+'</div>' + html;
-
-		//-----------------------------------------
-		// отображаем диалог
-		var dlg = jsk.waitingMessageShow('<div class="jsk_mini_dialog">'+html+'</div>').addClass(options.windowClasses);
-		var dialogContent = dlg.find('.jsk_mini_dialog');
-
-		options.baseDomObject = $(options.baseDomObject);
-		var x, y, y1, wnd = $(window);
-
-		if(options.baseDomObject.size() > 0)
-		{ // найден базовый объект - позиционируем окно по нему
-			var p = options.baseDomObject.offset();
-
-			y = p.top - wnd.scrollTop() - parseInt(dialogContent.outerHeight() / 2) + options.offsetY;
-			x = p.left + options.offsetX;
-
-			y1 = y + dialogContent.outerHeight();
-			if(y1 > wnd.height()) y -= y1 - wnd.height();
-
-			dlg.css({'padding-top': 0, 'text-align': 'left'});
-			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px', 'left': x + 'px'});
-		}
-		else
-		{ // позиционируем по центру экрана
-			y = (wnd.height() - dialogContent.outerHeight())/2;
-			dlg.css({'padding-top': 0, 'text-align': 'center'});
-			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
-		}
-
-		//-----------------------------------------
-		// привязка обработчиков
-		//-----------------------------------------
-
-		// кнопка типа "cancel" - закрываем окно
-		dlg.find('.jsk_js_cancel').bind('click', function(e){
-			jsk.waitingAnimationHide();
-			e.preventDefault();
-			return true;
-		});
-
-		//-----------------------------------------
-		// клавиши Enter и Escape
-		dlg.bind('keydown', function(e)
-		{
-			if(e.which == 27 /* ESCAPE */)
-			{
-				dlg.find('.jsk_js_cancel').click();
-				e.preventDefault();
-				return true;
-			}
-
-			if(e.which == 13 /* ENTER */)
-			{
-				if(!$(e.target).is('textarea'))
-				{
-					dlg.find('.jsk_js_submit').click();
-					e.preventDefault();
-				}
-				return true;
-			}
-
-			return true;
-		});
-
-		$(dlg.find(':input')[0]).focus(); // фокусируемся на первом контроле
-
-		return dlg;
 	},
 
 	/**

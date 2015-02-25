@@ -10,8 +10,6 @@
 namespace m00nk\jsk;
 use yii\web\AssetBundle;
 
-
-
 class JskAsset extends AssetBundle
 {
 	public $css = [
@@ -24,8 +22,6 @@ class JskAsset extends AssetBundle
 
 	public $depends = [
 		'yii\web\JqueryAsset',
-		'yii\web\YiiAsset',
-//		'yii\jui\JuiAsset',
 		'yii\bootstrap\BootstrapAsset',
 	];
 

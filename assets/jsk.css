@@ -9,21 +9,51 @@
 }
 #jskWaitingAnimationCover {
   background: #fff;
-  z-index: 100;
+  z-index: 1100;
 }
 #jskWaitingAnimationWrapper {
-  z-index: 101;
+  z-index: 1110;
   text-align: center;
   vertical-align: middle;
   padding-top: 200px;
 }
 #jskWaitingAnimationImage {
-  position: absolute;
-  left: -32000px;
+  width: 128px;
+  height: 128px;
+  background: url('ani-logo.gif') no-repeat top left;
 }
 #jskWaitingAnimationBorder {
   display: inline-block;
   padding: 20px;
+}
+.jskWaitingAnimationIcon16 {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url('ani-16.gif') no-repeat top left;
+}
+.jskWaitingAnimationIcon35 {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background: url('ani-35.gif') no-repeat top left;
+}
+.jskWaitingAnimationIconBar {
+  display: inline-block;
+  width: 220px;
+  height: 19px;
+  background: url('ani-bar.gif') no-repeat top left;
+}
+.jskWaitingAnimationIconLogo {
+  display: inline-block;
+  width: 128px;
+  height: 128px;
+  background: url('ani-logo.gif') no-repeat top left;
+}
+#jskWaitingMessage .alert {
+  width: 80%;
+  max-width: 700px;
+  display: inline-block;
 }
 .ui-widget-overlay {
   opacity: 0.8;
