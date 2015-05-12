@@ -8,6 +8,7 @@
  */
 
 namespace m00nk\jsk;
+use yii\jui\Dialog;
 use yii\web\AssetBundle;
 
 class JskAsset extends AssetBundle
@@ -23,8 +24,7 @@ class JskAsset extends AssetBundle
 	public $depends = [
 		'yii\bootstrap\BootstrapAsset',
 		'yii\web\JqueryAsset',
-		'yii\jui\DialogAsset',
-		'yii\jui\ThemeAsset'
+		'yii\jui\JuiAsset',
 	];
 
 	public $publishOptions = [
@@ -33,6 +33,8 @@ class JskAsset extends AssetBundle
 
 	public function init()
 	{
+		Dialog::
+
 		$this->sourcePath = __DIR__.'/assets';
 		parent::init();
 	}
