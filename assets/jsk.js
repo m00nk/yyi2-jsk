@@ -30,6 +30,7 @@ var jsk = {
 
 	init: function(sets)
 	{
+
 		this.settings = $.extend(this.settings, sets || {});
 
 		$('<div id="jskWaitingAnimationCover"></div>').appendTo('body');
