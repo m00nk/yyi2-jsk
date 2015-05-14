@@ -33,8 +33,6 @@ class JskAsset extends AssetBundle
 
 	public function init()
 	{
-		Dialog::
-
 		$this->sourcePath = __DIR__.'/assets';
 		parent::init();
 	}
