@@ -552,17 +552,18 @@ var jsk = {
 	 */
 	arrayDiff : function(a1, a2)
 	{
-		var out = [], found;
-
-		for(var i=0,_c=a1.length; i < _c; i++)
-		{
-			found = false;
-			for(var j=0,_cc=a2.length; j < _cc; j++)
-				if(a1[i] == a2[j]) { found = true; break; }
-
-			if(!found) out.push(a1[i]);
-		}
-		return out;
+		return $(a1).not(a2).get();
+		//var out = [], found;
+		//
+		//for(var i=0,_c=a1.length; i < _c; i++)
+		//{
+		//	found = false;
+		//	for(var j=0,_cc=a2.length; j < _cc; j++)
+		//		if(a1[i] == a2[j]) { found = true; break; }
+		//
+		//	if(!found) out.push(a1[i]);
+		//}
+		//return out;
 	},
 
 	/**
