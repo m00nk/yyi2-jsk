@@ -8,34 +8,21 @@
  */
 
 namespace m00nk\jsk;
-use yii\jui\Dialog;
 use yii\web\AssetBundle;
 
-class JskAsset extends AssetBundle
+class SweetAlertAsset extends AssetBundle
 {
+	public $sourcePath = '@bower/sweetalert';
+
 	public $css = [
-		'jsk.css',
+		'dist/sweetalert.css',
 	];
 
 	public $js = [
-		'jsk.js'
-	];
-
-	public $depends = [
-		'yii\bootstrap\BootstrapAsset',
-		'yii\web\JqueryAsset',
-		'yii\jui\JuiAsset',
-		'm00nk\jsk\SweetAlertAsset'
+		'dist/sweetalert.min.js',
 	];
 
 	public $publishOptions = [
 		'forceCopy' => YII_ENV_DEV
 	];
-
-	public function init()
-	{
-		$this->sourcePath = __DIR__.'/assets';
-		parent::init();
-	}
-
 }

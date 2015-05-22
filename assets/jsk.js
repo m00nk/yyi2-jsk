@@ -585,6 +585,29 @@ var jsk = {
 	strReplace : function(str, from, to)
 	{
 		return str.replace(new RegExp(from,'gi'), to); // gi = Global and case-Insensitive
+	},
+
+	/**
+	 * Красивая замена стандартному алерту. Документация: http://t4t5.github.io/sweetalert/
+	 *
+	 * @param message текст сообщения
+	 * @param title заголовок сообщения
+	 * @param type тип ("warning", "error", "success", "info"). Не обязательное.
+	 * @param options дополнительные опции, описание: http://t4t5.github.io/sweetalert/. Не обязательное.
+	 * @param func функция-обработчик реакции пользователя. Не обязательное.
+	 * Если в функции открывается еще один алерт, то чтобы не произошло авто-закрытия, главному алерту нужно передать опцию closeOnConfirm = false
+	 */
+	sweetAlert : function(message, title, type, options, func)
+	{
+		var _defaultOptions = {
+			title: title,
+			text: message,
+			type: type
+		};
+
+		var opt = $.extend(_defaultOptions, options || {});
+
+		swal(opt, func);
 	}
 
 
