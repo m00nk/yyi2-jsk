@@ -620,7 +620,6 @@ var jsk = {
 	{
 		if(typeof delta == 'undefined') delta = 16;
 
-		var y;
 		var screenTop = $(window).scrollTop();
 		var screenBottom = screenTop + $(window).height();
 		var elTop = el.position().top;
@@ -628,14 +627,12 @@ var jsk = {
 
 		if(screenTop > elTop)
 		{ // элемент выше
-			y = screenTop - elTop - delta;
+			$(window).scrollTop(screenTop - elTop - delta);
 		}
 
 		if(screenBottom < elBottom)
 		{ // элемент ниже
-			y = screenTop + elBottom - screenBottom + delta;
+			$(window).scrollTop(screenTop + elBottom - screenBottom + delta);
 		}
-
-		$(window).scrollTop(y);
 	}
 };
