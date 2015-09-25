@@ -1,5 +1,5 @@
 /**
- * @copyright (C) FIT-Media.com, {@link http://tanitacms.net}
+ * @copyright (C) FIT-Media.com,
  * Date: 12/05/12, Time: 8:27 PM
  *
  * @author Dmitrij "m00nk" Sheremetjev <m00nk1975@gmail.com>
