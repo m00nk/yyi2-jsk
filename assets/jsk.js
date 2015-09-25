@@ -608,7 +608,31 @@ var jsk = {
 		var opt = $.extend(_defaultOptions, options || {});
 
 		swal(opt, func);
+	},
+
+	/**
+	 * Определяет, видим ли переданный элемент на странице и, если не видим, то прокручивает страницу так, чтобы элемент стал видимым
+	 *
+	 * @param el jQuery-объект
+	 * @param delta размер отступа в пикселах (по-умолчанию 16)
+	 */
+	scrollToElement: function(el, delta)
+	{
+		if(typeof delta == 'undefined') delta = 16;
+
+		var screenTop = $(window).scrollTop();
+		var screenBottom = screenTop + $(window).height();
+		var elTop = el.position().top;
+		var elBottom = elTop + el.height();
+
+		if(screenTop > elTop)
+		{ // элемент выше
+			$(window).scrollTop(screenTop - elTop - delta);
+		}
+
+		if(screenBottom < elBottom)
+		{ // элемент ниже
+			$(window).scrollTop(screenTop + elBottom - screenBottom + delta);
+		}
 	}
-
-
 };
