@@ -52,6 +52,7 @@ var jsk = {
 	 * offsetX: смещение в точках по горизонтали от левого верхнего угла базового объекта
 	 * offsetY: смещение в точках по вертикали от левого верхнего угла базового объекта
 	 * buttons [ {text: "", classes: "", type: "submit|cancel|button|", attributes: ... }, ...] кнопки
+	 * autoClose: если TRUE, то клик за пределами диалога будет срабатывать как Cancel (закрывать диалог)
 	 *
 	 * Закрывается диалог через вызов jsk.miniDialogClose();
 	 *
@@ -80,7 +81,9 @@ var jsk = {
 					type: 'cancel',
 					attributes : ''
 				}
-			]
+			],
+			autoClose: false
+
 		}, options || {});
 
 
@@ -147,6 +150,10 @@ var jsk = {
 			e.preventDefault();
 			return true;
 		});
+
+		// клик по фону для закрытия диалога (только если autoClose == true)
+		if(options.autoClose)
+			$('#jskWaitingMessageWrapper').bind('click', function(e){ jsk.miniDialogClose();e.preventDefault(); });
 
 		//-----------------------------------------
 		// клавиши Enter и Escape
@@ -634,5 +641,22 @@ var jsk = {
 		{ // элемент ниже
 			$(window).scrollTop(screenTop + elBottom - screenBottom + delta);
 		}
+	},
+
+	/**
+	 * Преобразует число (целое или дробное) в денежный формат (типа $ 1,234,517.00)
+	 *
+	 * @param n число
+	 * @param thousandSeparator разделитель тысяч
+	 * @param prevCurrency знак валюты (добавится перед числом), не обязателен
+	 * @param postCurrency знак валюты (добавится после числа), не обязателен
+	 * @returns {string}
+	 */
+	currencyFormat: function(n, thousandSeparator, prevCurrency)
+	{
+		prevCurrency = (typeof prevCurrency == 'undefined') ? '' : prevCurrency + ' ';
+		postCurrency = (typeof postCurrency == 'undefined') ? '' : postCurrency + ' ';
+
+	    return prevCurrency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1"+thousandSeparator) + postCurrency;
 	}
 };
