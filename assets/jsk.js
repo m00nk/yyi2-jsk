@@ -153,7 +153,15 @@ var jsk = {
 
 		// клик по фону для закрытия диалога (только если autoClose == true)
 		if(options.autoClose)
-			$('#jskWaitingMessageWrapper').bind('click', function(e){ jsk.miniDialogClose();e.preventDefault(); });
+			$('#jskWaitingMessageWrapper').bind('click', function(e){
+				var domOb = $(e.target);
+				var md = $(domOb.parents('.jsk_mini_dialog')[0]);
+
+				if(md.length == 0)
+				{ // клик произошел вне диалога - закрываемся
+					jsk.miniDialogClose();e.preventDefault();
+				}
+			});
 
 		//-----------------------------------------
 		// клавиши Enter и Escape
