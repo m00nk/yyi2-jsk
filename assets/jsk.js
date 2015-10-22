@@ -226,24 +226,37 @@ var jsk = {
 	waitingAnimationGetIconLogo: function(){ return $('<div class="jskWaitingAnimationIconLogo"></div>'); },
 
 	/**
-	 * Показывает глобальный индикатор загрузки, но используя HTML вместо картинки
+	 * Показывает модальный HTML. Используется для создания глобальных индикаторов работы или диалогов. ъ
+	 * @param delta - коэффициент для выравнивания по вертикали.
+	 *      Дефолт = 2 (ровно по центру окна). 1 - ровно по нижнему краю. 0 - ровно по верхнему краю. 3 - одна треть пространства сверху и две трети снизу, и т.д.
 	 */
-	waitingMessageShow: function(html)
+	waitingMessageShow: function(html, delta)
 	{
-		var d1 = $('<div id="jskWaitingMessageWrapper"></div>').css({
+		if(typeof delta == 'undefined') delta = 2;
+
+		var dl = $('<div id="jskWaitingMessageWrapper"></div>').css({
 			position: 'fixed', top: 0, left: 0,
 			width: '100%', height: '100%',
 			'z-index': 1110,
 			'text-align': 'center',
-			'vertical-align': 'middle',
-			'padding-top': '300px'
+			'vertical-align': 'middle'
 		}).appendTo('body');
 
-		$('<div id="jskWaitingMessage">' + html + '</div>').appendTo(d1);
-		$('#jskWaitingAnimationCover').css('opacity', 0.75).show();
-		$('#jskWaitingMessageWrapper').css('display', 'table-cell').show();
+		var html = $(html);
 
-		return d1;
+		$('<div id="jskWaitingMessage"></div>').append(html).appendTo(dl);
+
+		$('#jskWaitingAnimationCover').css('opacity', 0.75).show();
+		$('#jskWaitingMessageWrapper') /*.css('display', 'table-cell') */.show();
+
+		var y, wnd = $(window);
+
+		// позиционируем по центру экрана
+		y = (wnd.height() - html.outerHeight())/delta;
+		dl.css({'padding-top': 0, 'text-align': 'center'});
+		dl.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
+
+		return dl;
 	},
 
 	/**
