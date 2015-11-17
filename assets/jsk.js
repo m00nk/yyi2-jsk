@@ -597,9 +597,11 @@ var jsk = {
 	/**
 	 * Ищет значение needle в массиве haystack и возвращает ключ, если найдено. Если искомое значение отсутствует - вернет false
 	 * Примечание: для массивов с числовыми индексами лучше использовать jQuery.inArray(val, array, [fromIndex])
+	 * Если параметр strict == TRUE, то будут проверяться не только значения, но и типы. Если FALSE (или не задан), то только значения.
 	 */
-	arraySearch: function (value, arr)
+	arraySearch: function (value, arr, strict)
 	{
+		if(typeof strict == 'undefined') strict = false;
 		for(var key in arr)
 			if( (strict && arr[key] === value) || (!strict && arr[key] == value) )
 				return key;
