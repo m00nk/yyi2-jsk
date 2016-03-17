@@ -13,13 +13,13 @@ var jsk = {
 		btnOk: 'Ok',
 		btnYes: 'Да',
 		btnNo: 'Нет',
-		btnApply : 'Применить',
-		btnUpdate : 'Обновить',
-		btnSave : 'Сохранить',
-		btnCancel : 'Отмена',
-		btnClose : 'Закрыть',
-		btnAccept : 'Принять',
-		btnDecline : 'Отклонить',
+		btnApply: 'Применить',
+		btnUpdate: 'Обновить',
+		btnSave: 'Сохранить',
+		btnCancel: 'Отмена',
+		btnClose: 'Закрыть',
+		btnAccept: 'Принять',
+		btnDecline: 'Отклонить',
 
 		titleMessage: 'Сообщение',
 		titleError: 'Ошибка',
@@ -63,58 +63,61 @@ var jsk = {
 	miniDialog: function(html, options)
 	{
 		options = $.extend({
-			title : '',
+			title: '',
 			windowClasses: '',
 			baseDomObject: false,
-			offsetX : 0,
-			offsetY : 0,
-			buttons : [
+			offsetX: 0,
+			offsetY: 0,
+			buttons: [
 				{
-					text : jsk.settings.btnAccept,
+					text: jsk.settings.btnAccept,
 					classes: 'btn btn-sm btn-primary',
 					type: 'submit',
-					attributes : ''
+					attributes: ''
 				},
 				{
-					text : jsk.settings.btnCancel,
+					text: jsk.settings.btnCancel,
 					classes: 'btn btn-sm btn-default',
 					type: 'cancel',
-					attributes : ''
+					attributes: ''
 				}
 			],
 			autoClose: false
 
 		}, options || {});
 
-
 		if(options.buttons.length > 0)
 		{ // добавляем в код кнопки
 			var btnHtml = '';
-			for(var i=0; i<options.buttons.length; i++)
+			for(var i = 0; i < options.buttons.length; i++)
 			{
 				var btn = options.buttons[i];
 				var classes = btn.classes || '';
 				var attributes = btn.attributes || '';
 				switch(btn.type)
 				{
-					case 'submit' : classes += ' jsk_js_submit'; break;
-					case 'cancel' : classes += ' jsk_js_cancel'; break;
+					case 'submit' :
+						classes += ' jsk_js_submit';
+						break;
+					case 'cancel' :
+						classes += ' jsk_js_cancel';
+						break;
 				}
 
-				btnHtml += '<a href="#" class="'+classes+'" '+attributes+'>'+btn.text+'</a>';
+				btnHtml += '<a href="#" class="' + classes + '" ' + attributes + '>' + btn.text + '</a>';
 			}
 
-			html += '<div class="jsk_buttons">'+btnHtml + '</div>';
+			html += '<div class="jsk_buttons">' + btnHtml + '</div>';
 		}
 
 		//-----------------------------------------
 		// создаем заголовок
 		if(options.title.length)
-			html = '<div class="jsk_mini_dlg_title">'+options.title+'</div>' + html;
+			html = '<div class="jsk_mini_dlg_title">' + options.title + '</div>' + html;
 
 		//-----------------------------------------
 		// отображаем диалог
-		var dlg = jsk.waitingMessageShow('<div class="jsk_mini_dialog">'+html+'</div>').addClass(options.windowClasses);
+		var dlg = jsk.waitingMessageShow('<div class="jsk_mini_dialog">' + html + '</div>').addClass(options.windowClasses);
 		var dialogContent = dlg.find('.jsk_mini_dialog');
 
 		options.baseDomObject = $(options.baseDomObject);
@@ -135,7 +138,7 @@ var jsk = {
 		}
 		else
 		{ // позиционируем по центру экрана
-			y = (wnd.height() - dialogContent.outerHeight())/2;
+			y = (wnd.height() - dialogContent.outerHeight()) / 2;
 			dlg.css({'padding-top': 0, 'text-align': 'center'});
 			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
 		}
@@ -145,7 +148,8 @@ var jsk = {
 		//-----------------------------------------
 
 		// кнопка типа "cancel" - закрываем окно
-		dlg.find('.jsk_js_cancel').bind('click', function(e){
+		dlg.find('.jsk_js_cancel').bind('click', function(e)
+		{
 			jsk.miniDialogClose();
 			e.preventDefault();
 			return true;
@@ -153,13 +157,15 @@ var jsk = {
 
 		// клик по фону для закрытия диалога (только если autoClose == true)
 		if(options.autoClose)
-			$('#jskWaitingMessageWrapper').bind('click', function(e){
+			$('#jskWaitingMessageWrapper').bind('click', function(e)
+			{
 				var domOb = $(e.target);
 				var md = $(domOb.parents('.jsk_mini_dialog')[0]);
 
 				if(md.length == 0)
 				{ // клик произошел вне диалога - закрываемся
-					jsk.miniDialogClose();e.preventDefault();
+					jsk.miniDialogClose();
+					e.preventDefault();
 				}
 			});
 
@@ -192,7 +198,8 @@ var jsk = {
 		return dlg;
 	},
 
-	miniDialogClose: function(){
+	miniDialogClose: function()
+	{
 		jsk.waitingAnimationHide();
 	},
 
@@ -214,7 +221,6 @@ var jsk = {
 		$('#jskWaitingAnimationWrapper').hide();
 		$('#jskWaitingMessageWrapper').remove();
 	},
-
 
 	/**
 	 * Возвращает jQuery-объект картинки-индикатора загрузки для вставки в страницу.
@@ -252,7 +258,7 @@ var jsk = {
 		var y, wnd = $(window);
 
 		// позиционируем по центру экрана
-		y = (wnd.height() - html.outerHeight())/delta;
+		y = (wnd.height() - html.outerHeight()) / delta;
 		dl.css({'padding-top': 0, 'text-align': 'center'});
 		dl.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
 
@@ -362,7 +368,7 @@ var jsk = {
 	 */
 	dialogByDiv: function(divId, options)
 	{
-		var d = $('#'+divId);
+		var d = $('#' + divId);
 
 		options = $.extend({
 			title: d.attr('data-title') || '',
@@ -399,7 +405,7 @@ var jsk = {
 			closeOnEscape: true,
 			close: function(){ $(this).remove(); },
 			buttons: [
-				{ text: jsk.settings.btnClose, click: function(){ $(this).dialog("close"); } }
+				{text: jsk.settings.btnClose, click: function(){ $(this).dialog("close"); }}
 			]
 		};
 
@@ -430,14 +436,15 @@ var jsk = {
 			closeOnEscape: true,
 			close: function(){ $(this).remove(); },
 			buttons: [
-				{ text: jsk.settings.btnYes,
+				{
+					text: jsk.settings.btnYes,
 					click: function()
 					{
 						if(typeof onOk != 'undefined') onOk(this, data);
 						$(this).dialog("close");
 					}
 				},
-				{ text: jsk.settings.btnNo, click: function(){$(this).dialog("close");}}
+				{text: jsk.settings.btnNo, click: function(){$(this).dialog("close");}}
 			]
 		};
 
@@ -453,7 +460,7 @@ var jsk = {
 	modalAlertShow: function(message, className)
 	{
 		className = (className) || 'alert-info';
-		return jsk.waitingMessageShow('<div class="alert ' + className + '">'+message+'</div>');
+		return jsk.waitingMessageShow('<div class="alert ' + className + '">' + message + '</div>');
 	},
 
 	/**
@@ -461,7 +468,7 @@ var jsk = {
 	 */
 	openLinkInNewTab: function(url)
 	{
-		window.open(url , '_blank')
+		window.open(url, '_blank')
 	},
 
 	/** из контролов формы создает массив, пригодный для пересылки постом (для аякс-запросов) */
@@ -469,12 +476,13 @@ var jsk = {
 	{
 		var p, name, data = {};
 
-		jQuery.each($(formSelector).serializeArray(), function(){
+		jQuery.each($(formSelector).serializeArray(), function()
+		{
 			var p, arr, name = this.name;
 			p = name.search(/\[\]/);
 			if(p != -1)
 			{ // поле с множественным выбором типа SomeClass[SomeField][]
-				name = name.substring(0, name.length-2);
+				name = name.substring(0, name.length - 2);
 
 				p = name.search(/\[/);
 				if(p == -1)
@@ -487,7 +495,7 @@ var jsk = {
 					if(typeof data[arr[1]][arr[2]] == 'undefined')
 						data[arr[1]][arr[2]] = this.value;
 					else
-						data[arr[1]][arr[2]] += ','+this.value; // собираем массив значений
+						data[arr[1]][arr[2]] += ',' + this.value; // собираем массив значений
 				}
 			}
 			else
@@ -511,16 +519,15 @@ var jsk = {
 	{
 		str = (str + '').toString();
 
-		  // Tilde should be allowed unescaped in future versions of PHP (as reflected below), but if you want to reflect current
-		  // PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
-		  return encodeURIComponent(str)
-		    .replace(/!/g, '%21')
-		    .replace(/'/g, '%27')
-		    .replace(/\(/g, '%28')
-		    .
-		  replace(/\)/g, '%29')
-		    .replace(/\*/g, '%2A')
-		    .replace(/%20/g, '+');
+		// Tilde should be allowed unescaped in future versions of PHP (as reflected below), but if you want to reflect current
+		// PHP behavior, you would need to add ".replace(/~/g, '%7E');" to the following.
+		return encodeURIComponent(str)
+			.replace(/!/g, '%21')
+			.replace(/'/g, '%27')
+			.replace(/\(/g, '%28')
+			.replace(/\)/g, '%29')
+			.replace(/\*/g, '%2A')
+			.replace(/%20/g, '+');
 	},
 
 	/**
@@ -528,7 +535,8 @@ var jsk = {
 	 * Пример:
 	 *   var link = jsk.getDomObject(e.target, 'a.activator');
 	 */
-	getDomObject: function(base, type){
+	getDomObject: function(base, type)
+	{
 		var o = $(base);
 		if(!o.is(type)) o = $(o.parents(type)[0]);
 		return o;
@@ -547,15 +555,15 @@ var jsk = {
 					if(obj.hasOwnProperty(i))
 					{
 						if(typeof obj[i] == 'object')
-							out += '<li><b>'+i+' =</b>  ['+_vd(obj[i])+']</li>';
+							out += '<li><b>' + i + ' =</b>  [' + _vd(obj[i]) + ']</li>';
 						else
-							out += '<li><b>'+i+' =</b> ['+obj[i]+']</li>';
+							out += '<li><b>' + i + ' =</b> [' + obj[i] + ']</li>';
 					}
 				}
 			}
 			else
 				return obj;
-			return out != '' ? '<ul>'+out+'</ul>' : '';
+			return out != '' ? '<ul>' + out + '</ul>' : '';
 		}
 
 		this.messageBox(_vd(obj), 'Dump');
@@ -578,7 +586,7 @@ var jsk = {
 	/**
 	 * Возвращает массив элементов из массива a1, которые отсутствуют в массиве a2
 	 */
-	arrayDiff : function(a1, a2)
+	arrayDiff: function(a1, a2)
 	{
 		return $(a1).not(a2).get();
 		//var out = [], found;
@@ -599,11 +607,11 @@ var jsk = {
 	 * Примечание: для массивов с числовыми индексами лучше использовать jQuery.inArray(val, array, [fromIndex])
 	 * Если параметр strict == TRUE, то будут проверяться не только значения, но и типы. Если FALSE (или не задан), то только значения.
 	 */
-	arraySearch: function (value, arr, strict)
+	arraySearch: function(value, arr, strict)
 	{
 		if(typeof strict == 'undefined') strict = false;
 		for(var key in arr)
-			if( (strict && arr[key] === value) || (!strict && arr[key] == value) )
+			if((strict && arr[key] === value) || (!strict && arr[key] == value))
 				return key;
 
 		return false;
@@ -611,10 +619,10 @@ var jsk = {
 
 	/**
 	 * Замена подстроки
- 	 */
-	strReplace : function(str, from, to)
+	 */
+	strReplace: function(str, from, to)
 	{
-		return str.replace(new RegExp(from,'gi'), to); // gi = Global and case-Insensitive
+		return str.replace(new RegExp(from, 'gi'), to); // gi = Global and case-Insensitive
 	},
 
 	/**
@@ -627,7 +635,7 @@ var jsk = {
 	 * @param func функция-обработчик реакции пользователя. Не обязательное.
 	 * Если в функции открывается еще один алерт, то чтобы не произошло авто-закрытия, главному алерту нужно передать опцию closeOnConfirm = false
 	 */
-	sweetAlert : function(message, title, type, options, func)
+	sweetAlert: function(message, title, type, options, func)
 	{
 		var _defaultOptions = {
 			title: title,
@@ -680,6 +688,56 @@ var jsk = {
 		prevCurrency = (typeof prevCurrency == 'undefined') ? '' : prevCurrency + ' ';
 		postCurrency = (typeof postCurrency == 'undefined') ? '' : postCurrency + ' ';
 
-	    return prevCurrency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1"+thousandSeparator) + postCurrency;
+		return prevCurrency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1" + thousandSeparator) + postCurrency;
+	},
+
+	/**
+	 * Возвращает смещение текущего часового поясас от UTC в минутах.
+	 *
+	 * @returns {number}
+	 */
+	getTimeZoneOffset: function()
+	{
+		var date = new Date();
+		return -date.getTimezoneOffset();
+	},
+
+	/**
+	 * Проверяет, используют ли в текущем часовом поясе переход на летнее время (булево значение)
+	 * Источник: http://stackoverflow.com/a/26778394
+	 */
+	isDst: function()
+	{
+		Date.prototype.stdTimezoneOffset = function()
+		{
+			var fy = this.getFullYear();
+			if(!Date.prototype.stdTimezoneOffset.cache.hasOwnProperty(fy))
+			{
+
+				var maxOffset = new Date(fy, 0, 1).getTimezoneOffset();
+				var monthsTestOrder = [6, 7, 5, 8, 4, 9, 3, 10, 2, 11, 1];
+
+				for(var mi = 0; mi < 12; mi++)
+				{
+					var offset = new Date(fy, monthsTestOrder[mi], 1).getTimezoneOffset();
+					if(offset != maxOffset)
+					{
+						maxOffset = Math.max(maxOffset, offset);
+						break;
+					}
+				}
+				Date.prototype.stdTimezoneOffset.cache[fy] = maxOffset;
+			}
+			return Date.prototype.stdTimezoneOffset.cache[fy];
+		};
+
+		Date.prototype.stdTimezoneOffset.cache = {};
+
+		Date.prototype.isDST = function()
+		{
+			return this.getTimezoneOffset() < this.stdTimezoneOffset();
+		};
+
+		return new Date().isDST();
 	}
 };
