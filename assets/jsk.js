@@ -193,7 +193,7 @@ var jsk = {
 			return true;
 		});
 
-		$(dlg.find(':input')[0]).focus(); // фокусируемся на первом контроле
+		$(dlg.find('select,:input:not([type=hidden])')[0]).focus(); // фокусируемся на первом контроле
 
 		return dlg;
 	},
