@@ -208,7 +208,7 @@ var jsk = {
 	 */
 	waitingAnimationShow: function()
 	{
-		$('#jskWaitingAnimationCover').css('opacity', 0.75).show();
+		$('#jskWaitingAnimationCover').show();
 		$('#jskWaitingAnimationWrapper').css('display', 'table-cell').show();
 	},
 
@@ -243,7 +243,7 @@ var jsk = {
 		var dl = $('<div id="jskWaitingMessageWrapper"></div>').css({
 			position: 'fixed', top: 0, left: 0,
 			width: '100%', height: '100%',
-			'z-index': 1110,
+			'z-index': 2000,
 			'text-align': 'center',
 			'vertical-align': 'middle'
 		}).appendTo('body');
@@ -252,7 +252,7 @@ var jsk = {
 
 		$('<div id="jskWaitingMessage"></div>').append(html).appendTo(dl);
 
-		$('#jskWaitingAnimationCover').css('opacity', 0.75).show();
+		$('#jskWaitingAnimationCover').show();
 		$('#jskWaitingMessageWrapper') /*.css('display', 'table-cell') */.show();
 
 		var y, wnd = $(window);
