@@ -3,7 +3,7 @@
     "description" : "JavaScript functions Kit",
     "type": "yii2-extension",
     "license": "MIT",
-    "version" : "1.1.6",
+    "version" : "2.0.0",
     "authors": [
         {
             "name": "Dmitrij Sheremetjev",
@@ -13,9 +13,9 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.4",
+        "yiisoft/yii2": ">=2.0.10",
         "yiisoft/yii2-jui": "2.0.*@dev",
-        "bower-asset/sweetalert" : "1.0.1"
+        "bower/sweetalert" : "1.0.1"
     },
     "autoload": {
         "psr-4": {
