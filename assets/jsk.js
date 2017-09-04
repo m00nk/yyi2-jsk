@@ -137,10 +137,17 @@ var jsk = {
 			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px', 'left': x + 'px'});
 		}
 		else
-		{ // позиционируем по центру экрана
+		{ // позиционируем по центру экрана (+адаптация под мобильные или невысокие экраны)
+			var dlg_message = dlg.find('#jskWaitingMessage');
 			y = (wnd.height() - dialogContent.outerHeight()) / 2;
 			dlg.css({'padding-top': 0, 'text-align': 'center'});
-			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
+			if (dlg_message.height() > wnd.height()) 
+			{
+				dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': '0'});
+				dlg.css({'position':'absolute'});
+			}
+			else
+				dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px'});
 		}
 
 		//-----------------------------------------
