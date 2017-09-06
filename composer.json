@@ -3,7 +3,7 @@
     "description" : "JavaScript functions Kit",
     "type": "yii2-extension",
     "license": "MIT",
-    "version" : "2.0.1",
+    "version" : "2.0.2",
     "authors": [
         {
             "name": "Dmitrij Sheremetjev",
