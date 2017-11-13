@@ -119,29 +119,32 @@ var jsk = {
 		// отображаем диалог
 		var dlg = jsk.waitingMessageShow('<div class="jsk_mini_dialog">' + html + '</div>').addClass(options.windowClasses);
 		var dialogContent = dlg.find('.jsk_mini_dialog');
-
-		options.baseDomObject = $(options.baseDomObject);
 		var x, y, y1, wnd = $(window);
 
-		if(options.baseDomObject.size() > 0)
-		{ // найден базовый объект - позиционируем окно по нему
-			var p = options.baseDomObject.offset();
-
-			y = p.top - wnd.scrollTop() - parseInt(dialogContent.outerHeight() / 2) + options.offsetY;
-			x = p.left + options.offsetX;
-
-			y1 = y + dialogContent.outerHeight();
-			if(y1 > wnd.height()) y -= y1 - wnd.height();
-
-			dlg.css({'padding-top': 0, 'text-align': 'left'});
-			dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px', 'left': x + 'px'});
+		if(options.baseDomObject)
+		{ // указан базовый объект - позиционируем окно по нему
+			var bdo = $(options.baseDomObject);
+	
+			if(bdo.length)
+			{
+				var p = bdo[0].offset();
+	
+				y = p.top - wnd.scrollTop() - parseInt(dialogContent.outerHeight() / 2) + options.offsetY;
+				x = p.left + options.offsetX;
+	
+				y1 = y + dialogContent.outerHeight();
+				if(y1 > wnd.height()) y -= y1 - wnd.height();
+	
+				dlg.css({'padding-top': 0, 'text-align': 'left'});
+				dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': y + 'px', 'left': x + 'px'});
+			}
 		}
 		else
 		{ // позиционируем по центру экрана (+адаптация под мобильные или невысокие экраны)
 			var dlg_message = dlg.find('#jskWaitingMessage');
 			y = (wnd.height() - dialogContent.outerHeight()) / 2;
 			dlg.css({'padding-top': 0, 'text-align': 'center'});
-			if (dlg_message.height() > wnd.height()) 
+			if (dlg_message.height() > wnd.height())
 			{
 				dlg.find('#jskWaitingMessage').css({'position': 'relative', 'top': '0'});
 				dlg.css({'position':'absolute'});
