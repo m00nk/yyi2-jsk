@@ -667,21 +667,7 @@ var jsk = {
 	scrollToElement: function(el, delta)
 	{
 		if(typeof delta == 'undefined') delta = 16;
-
-		var screenTop = $(window).scrollTop();
-		var screenBottom = screenTop + $(window).height();
-		var elTop = el.position().top;
-		var elBottom = elTop + el.height();
-
-		if(screenTop > elTop)
-		{ // элемент выше
-			$(window).scrollTop(screenTop - elTop - delta);
-		}
-
-		if(screenBottom < elBottom)
-		{ // элемент ниже
-			$(window).scrollTop(screenTop + elBottom - screenBottom + delta);
-		}
+        $("html, body").animate({scrollTop: el.offset().top - delta }, 500);
 	},
 
 	/**
