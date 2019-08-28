@@ -34,7 +34,7 @@ var jsk = {
 		this.settings = $.extend(this.settings, sets || {});
 
 		$('<div id="jskWaitingAnimationCover"></div>').appendTo('body');
-		$('<div id="jskWaitingAnimationWrapper"><div id="jskWaitingAnimationBorder"><div id="jskWaitingAnimationImage"></div></div></div>').appendTo('body');
+		$('<div id="jskWaitingAnimationWrapper"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>').appendTo('body');
 	},
 
 	/**
@@ -219,7 +219,7 @@ var jsk = {
 	waitingAnimationShow: function()
 	{
 		$('#jskWaitingAnimationCover').show();
-		$('#jskWaitingAnimationWrapper').css('display', 'table-cell').show();
+		$('#jskWaitingAnimationWrapper').show().css('display', 'flex');
 	},
 
 	/**

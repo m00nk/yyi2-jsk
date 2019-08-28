@@ -14,19 +14,106 @@
 }
 #jskWaitingAnimationWrapper {
   z-index: 2010;
-  text-align: center;
-  vertical-align: middle;
-  padding-top: 200px;
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
-#jskWaitingAnimationImage {
-  width: 128px;
-  height: 128px;
-  background: url('ani-logo.gif') no-repeat top left;
+#jskWaitingAnimationWrapper div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 32px 32px;
 }
-#jskWaitingAnimationBorder {
-  display: inline-block;
-  padding: 20px;
+#jskWaitingAnimationWrapper div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  margin: -3px 0 0 -3px;
 }
+#jskWaitingAnimationWrapper div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+#jskWaitingAnimationWrapper div:nth-child(1):after {
+  top: 50px;
+  left: 50px;
+}
+#jskWaitingAnimationWrapper div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+#jskWaitingAnimationWrapper div:nth-child(2):after {
+  top: 54px;
+  left: 45px;
+}
+#jskWaitingAnimationWrapper div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+#jskWaitingAnimationWrapper div:nth-child(3):after {
+  top: 57px;
+  left: 39px;
+}
+#jskWaitingAnimationWrapper div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+#jskWaitingAnimationWrapper div:nth-child(4):after {
+  top: 58px;
+  left: 32px;
+}
+#jskWaitingAnimationWrapper div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+#jskWaitingAnimationWrapper div:nth-child(5):after {
+  top: 57px;
+  left: 25px;
+}
+#jskWaitingAnimationWrapper div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+#jskWaitingAnimationWrapper div:nth-child(6):after {
+  top: 54px;
+  left: 19px;
+}
+#jskWaitingAnimationWrapper div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+#jskWaitingAnimationWrapper div:nth-child(7):after {
+  top: 50px;
+  left: 14px;
+}
+#jskWaitingAnimationWrapper div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+#jskWaitingAnimationWrapper div:nth-child(8):after {
+  top: 45px;
+  left: 10px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*
+#jskWaitingAnimationImage
+{
+	width: 128px;
+	height: 128px;
+	background: url('ani-logo.gif') no-repeat top left;
+}
+*/
+/*
+#jskWaitingAnimationBorder
+{
+	display: inline-block;
+	padding: 20px;
+}
+*/
 .jskWaitingAnimationIcon16 {
   display: inline-block;
   width: 16px;
@@ -85,160 +172,160 @@
   margin-right: 0;
 }
 .dlg_danger {
-  background: #fff3db;
+  background: hsl(40, 100%, 93%);
 }
 .dlg_danger .ui-dialog-titlebar {
   border-top: 0 none;
   border-left: 0 none;
   border-right: 0 none;
-  border-bottom-color: #dfca9f;
+  border-bottom-color: hsl(40, 50%, 75%);
   background: none;
   border-radius: 0;
 }
 .dlg_danger .ui-dialog-titlebar .ui-dialog-title {
-  color: #997733;
+  color: hsl(40, 50%, 40%);
 }
 .dlg_danger .ui-dialog-titlebar .ui-dialog-titlebar-close {
   display: none;
 }
 .dlg_danger .ui-dialog-content {
-  color: #997733;
+  color: hsl(40, 50%, 40%);
 }
 .dlg_danger .ui-dialog-buttonpane {
-  background: #fff3db;
-  border-top-color: #dfca9f;
+  background: hsl(40, 100%, 93%);
+  border-top-color: hsl(40, 50%, 75%);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 .dlg_danger .ui-dialog-buttonpane button {
   font-size: 0.8em;
-  border: 1px solid #d9bf8c;
-  background: #f4e2be;
-  color: #997733;
+  border: 1px solid hsl(40, 50%, 70%);
+  background: hsl(40, 70%, 85%);
+  color: hsl(40, 50%, 40%);
 }
 .dlg_danger .ui-dialog-buttonpane button:focus {
   outline: none;
 }
 .dlg_danger .ui-dialog-buttonpane button:hover {
-  background: #ffd480;
-  color: #7a5c1f;
+  background: hsl(40, 100%, 75%);
+  color: hsl(40, 60%, 30%);
 }
 .dlg_info {
-  background: #dbffff;
+  background: hsl(180, 100%, 93%);
 }
 .dlg_info .ui-dialog-titlebar {
   border-top: 0 none;
   border-left: 0 none;
   border-right: 0 none;
-  border-bottom-color: #9fdfdf;
+  border-bottom-color: hsl(180, 50%, 75%);
   background: none;
   border-radius: 0;
 }
 .dlg_info .ui-dialog-titlebar .ui-dialog-title {
-  color: #339999;
+  color: hsl(180, 50%, 40%);
 }
 .dlg_info .ui-dialog-titlebar .ui-dialog-titlebar-close {
   display: none;
 }
 .dlg_info .ui-dialog-content {
-  color: #339999;
+  color: hsl(180, 50%, 40%);
 }
 .dlg_info .ui-dialog-buttonpane {
-  background: #dbffff;
-  border-top-color: #9fdfdf;
+  background: hsl(180, 100%, 93%);
+  border-top-color: hsl(180, 50%, 75%);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 .dlg_info .ui-dialog-buttonpane button {
   font-size: 0.8em;
-  border: 1px solid #8cd9d9;
-  background: #bef4f4;
-  color: #339999;
+  border: 1px solid hsl(180, 50%, 70%);
+  background: hsl(180, 70%, 85%);
+  color: hsl(180, 50%, 40%);
 }
 .dlg_info .ui-dialog-buttonpane button:focus {
   outline: none;
 }
 .dlg_info .ui-dialog-buttonpane button:hover {
-  background: #80ffff;
-  color: #1f7a7a;
+  background: hsl(180, 100%, 75%);
+  color: hsl(180, 60%, 30%);
 }
 .dlg_success {
-  background: #dbffdb;
+  background: hsl(120, 100%, 93%);
 }
 .dlg_success .ui-dialog-titlebar {
   border-top: 0 none;
   border-left: 0 none;
   border-right: 0 none;
-  border-bottom-color: #9fdf9f;
+  border-bottom-color: hsl(120, 50%, 75%);
   background: none;
   border-radius: 0;
 }
 .dlg_success .ui-dialog-titlebar .ui-dialog-title {
-  color: #339933;
+  color: hsl(120, 50%, 40%);
 }
 .dlg_success .ui-dialog-titlebar .ui-dialog-titlebar-close {
   display: none;
 }
 .dlg_success .ui-dialog-content {
-  color: #339933;
+  color: hsl(120, 50%, 40%);
 }
 .dlg_success .ui-dialog-buttonpane {
-  background: #dbffdb;
-  border-top-color: #9fdf9f;
+  background: hsl(120, 100%, 93%);
+  border-top-color: hsl(120, 50%, 75%);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 .dlg_success .ui-dialog-buttonpane button {
   font-size: 0.8em;
-  border: 1px solid #8cd98c;
-  background: #bef4be;
-  color: #339933;
+  border: 1px solid hsl(120, 50%, 70%);
+  background: hsl(120, 70%, 85%);
+  color: hsl(120, 50%, 40%);
 }
 .dlg_success .ui-dialog-buttonpane button:focus {
   outline: none;
 }
 .dlg_success .ui-dialog-buttonpane button:hover {
-  background: #80ff80;
-  color: #1f7a1f;
+  background: hsl(120, 100%, 75%);
+  color: hsl(120, 60%, 30%);
 }
 .dlg_error {
-  background: #ffdbdb;
+  background: hsl(0, 100%, 93%);
 }
 .dlg_error .ui-dialog-titlebar {
   border-top: 0 none;
   border-left: 0 none;
   border-right: 0 none;
-  border-bottom-color: #df9f9f;
+  border-bottom-color: hsl(0, 50%, 75%);
   background: none;
   border-radius: 0;
 }
 .dlg_error .ui-dialog-titlebar .ui-dialog-title {
-  color: #993333;
+  color: hsl(0, 50%, 40%);
 }
 .dlg_error .ui-dialog-titlebar .ui-dialog-titlebar-close {
   display: none;
 }
 .dlg_error .ui-dialog-content {
-  color: #993333;
+  color: hsl(0, 50%, 40%);
 }
 .dlg_error .ui-dialog-buttonpane {
-  background: #ffdbdb;
-  border-top-color: #df9f9f;
+  background: hsl(0, 100%, 93%);
+  border-top-color: hsl(0, 50%, 75%);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 .dlg_error .ui-dialog-buttonpane button {
   font-size: 0.8em;
-  border: 1px solid #d98c8c;
-  background: #f4bebe;
-  color: #993333;
+  border: 1px solid hsl(0, 50%, 70%);
+  background: hsl(0, 70%, 85%);
+  color: hsl(0, 50%, 40%);
 }
 .dlg_error .ui-dialog-buttonpane button:focus {
   outline: none;
 }
 .dlg_error .ui-dialog-buttonpane button:hover {
-  background: #ff8080;
-  color: #7a1f1f;
+  background: hsl(0, 100%, 75%);
+  color: hsl(0, 60%, 30%);
 }
 .jsk_mini_dialog {
   padding: 20px;
