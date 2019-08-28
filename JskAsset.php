@@ -37,5 +37,4 @@ class JskAsset extends AssetBundle
 		$this->sourcePath = __DIR__.'/assets';
 		parent::init();
 	}
-
 }

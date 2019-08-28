@@ -735,5 +735,15 @@ var jsk = {
 		};
 
 		return new Date().isDST();
-	}
+	},
+	
+	/**
+	 * Декодирование строки из base64, корректно работающее с UTF-8
+	 */
+	base64decode: function(str) {
+		return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+			return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+		}).join(""));
+	},
+	
 };
